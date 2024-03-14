@@ -1,9 +1,8 @@
 package com.example.ipz_cw_4.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,13 +12,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.ipz_cw_4.Screen
 import com.example.ipz_cw_4.Task
 import com.example.ipz_cw_4.ui.theme.IPZ_CW_4_Serhii_MelnykTheme
 
@@ -41,7 +40,13 @@ fun TaskListScreen(modifier: Modifier = Modifier, navController: NavController) 
                     containerColor = it.getColor()
                 )
             ) {
-                Column {
+                Column(Modifier.clickable {
+                    navController.navigate(
+                        Screen.TaskDetailScreen(
+                            it.name, it.description, it.isActive
+                        ).route
+                    )
+                }) {
                     Text(text = it.name, style = TextStyle(fontSize = 36.sp))
                 }
             }
