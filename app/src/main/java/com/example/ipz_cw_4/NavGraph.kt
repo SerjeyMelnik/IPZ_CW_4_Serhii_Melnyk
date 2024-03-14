@@ -13,9 +13,25 @@ import com.example.ipz_cw_4.screens.TaskListScreen
 @Composable
 fun Nav() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.TaskListScreen.route) {
-        composable(route = Screen.TaskListScreen.route) {
-            TaskListScreen(navController = navController)
+    NavHost(navController = navController, startDestination = Screen.TaskListScreen().route) {
+        composable(
+            route = Screen.TaskListScreen().route, arguments = listOf(
+                navArgument("name") {
+                    type = NavType.StringType
+                    defaultValue = "default"
+                    nullable = true
+                },
+                navArgument("isActive") {
+                    type = NavType.BoolType
+                    defaultValue = false
+                },
+            )
+        ) { entry ->
+            TaskListScreen(
+                navController = navController,
+                name = entry.arguments?.getString("name"),
+                isActive = entry.arguments?.getBoolean("isActive") ?: false
+            )
         }
 
         composable(

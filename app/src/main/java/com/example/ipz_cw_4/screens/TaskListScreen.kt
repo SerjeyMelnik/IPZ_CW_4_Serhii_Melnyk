@@ -11,6 +11,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -23,11 +24,25 @@ import com.example.ipz_cw_4.Task
 import com.example.ipz_cw_4.ui.theme.IPZ_CW_4_Serhii_MelnykTheme
 
 @Composable
-fun TaskListScreen(modifier: Modifier = Modifier, navController: NavController) {
-    val taskList =
+fun TaskListScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    name: String?,
+    isActive: Boolean
+) {
+    val taskList = rememberSaveable {
         (1..100).map {
-            Task("Task $it", "Description $it", listOf(true, false).random())
+            val taskName = "Task $it"
+            Task(taskName, "Description $it", listOf(true, false).random())
         }.toMutableList()
+    }
+
+    if (name != null) {
+        taskList.firstOrNull { it.name == name }?.let { task ->
+            taskList.replaceAll { task }
+        }
+    }
+
 
     LazyColumn {
         items(taskList) {
@@ -58,7 +73,11 @@ fun TaskListScreen(modifier: Modifier = Modifier, navController: NavController) 
 @Composable
 fun TaskListScreenPreview() {
     IPZ_CW_4_Serhii_MelnykTheme {
-        TaskListScreen(navController = NavController(LocalContext.current))
+        TaskListScreen(
+            navController = NavController(LocalContext.current),
+            name = null,
+            isActive = false
+        )
     }
 }
 
