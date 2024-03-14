@@ -15,23 +15,11 @@ fun Nav() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.TaskListScreen().route) {
         composable(
-            route = Screen.TaskListScreen().route, arguments = listOf(
-                navArgument("name") {
-                    type = NavType.StringType
-                    defaultValue = "default"
-                    nullable = true
-                },
-                navArgument("isActive") {
-                    type = NavType.BoolType
-                    defaultValue = false
-                },
-            )
+            route = Screen.TaskListScreen().route
         ) { entry ->
-            TaskListScreen(
-                navController = navController,
-                name = entry.arguments?.getString("name"),
-                isActive = entry.arguments?.getBoolean("isActive") ?: false
-            )
+            val name = entry.arguments?.getString("name")
+            val isActive = entry.arguments?.getBoolean("isActive") ?: false
+            TaskListScreen(navController = navController, name = name, isActive = isActive)
         }
 
         composable(

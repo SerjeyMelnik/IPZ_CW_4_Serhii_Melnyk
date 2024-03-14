@@ -32,8 +32,8 @@ fun TaskDetailScreen(modifier: Modifier = Modifier, navController: NavController
         Text(task.description, style = TextStyle(fontSize = 24.sp))
 
         Switch(checked = task.isActive, onCheckedChange ={
-//            navController.previousBackStackEntry?.savedStateHandle?.set("name", task.name)
-//            navController.previousBackStackEntry?.savedStateHandle?.set("isActive", task.isActive)
+            navController.previousBackStackEntry?.savedStateHandle?.set("name", task.name)
+            navController.previousBackStackEntry?.savedStateHandle?.set("isActive", task.isActive)
             navController.popBackStack()
         })
     }
